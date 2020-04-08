@@ -61,17 +61,14 @@ def ml(params, newParams, test_x):
     print(train_x)
     print(test_x)
 
-    if(len(data_y) > 1):
-        model = LinearSVC()
-        model.fit(train_x, data_y.values.ravel())
+    model = LinearSVC()
+    model.fit(train_x, data_y.values.ravel())
 
-        prevision = model.predict(test_x)
+    prevision = model.predict(test_x)
 
-        data = pandas.read_csv('all.csv')
+    data = pandas.read_csv('all.csv')
 
-        return data[prevision[0]:prevision[0] + 1]
-    else:
-        return data_y[0:1]
+    return data[prevision[0]:prevision[0] + 1]
 
 # Example:
 #print(ml(['intelligence', 'power', 'gender', 'is_tall', 'publisher'], ['intelligence', 'power', 'gender', 'is_tall', 'is_Marvel Comics'], [2, 1, 0, 1, 1]))

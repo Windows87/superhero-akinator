@@ -39,14 +39,13 @@ class App extends Component {
     this.setQuestion();
   }
 
-  setQuestion = async (answer) => {
+  setQuestion = async () => {
     this.setState({ loading: true });
 
     try {
       const { alreadyFeatures, params } = this.state;
-      const { answers, characterMatch, feature, param, question } = await getQuestion(alreadyFeatures, params, [...this.state.answers, answer]);
+      const { answers, characterMatch, feature, param, question } = await getQuestion(alreadyFeatures, params, this.state.answers);
       this.setState({ params: [...this.state.params, param], alreadyFeatures: [...this.state.alreadyFeatures, feature], answersButtons: answers, characterMatch, question, loading: false });
-      if(answer) this.setState({ answers: [...this.state.answers, answer] });
     } catch(error) {
       console.log(error);
       this.setState({ loading: false });
@@ -55,7 +54,8 @@ class App extends Component {
   }
 
   onButtonClick = async answer => {
-    await this.setQuestion(answer);
+    await this.setState({ answers: [...this.state.answers, answer] });
+    await this.setQuestion();
 
     const finished = this.state.answers.length === numberOfQuestions;
 

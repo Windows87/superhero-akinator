@@ -47,4 +47,4 @@ answers = {
 questionWithComplete = ['eye_color', 'publisher', 'place_of_birth']
 
 # Absolute (Remove train_x item if is not equal)
-absoluteFeatures = ['publisher', 'gender', 'eye_color', 'place_of_birth', 'is_good']
+absoluteFeatures = ['publisher', 'gender', 'eye_color', 'is_good']

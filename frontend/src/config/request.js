@@ -1,2 +1,2 @@
-const url = 'http://localhost:5000';
+const url = '';
 export default url;
