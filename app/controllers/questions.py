@@ -21,6 +21,7 @@ def getQuestions():
         for id in characterMatch['name']:
             characterMatchId = id
 
+        print(characterMatch)
         print(characterMatch['name'][characterMatchId])
 
         characterMatch = {
@@ -30,7 +31,6 @@ def getQuestions():
           "publisher": characterMatch['publisher'][characterMatchId],
           "place_of_birth": characterMatch['place_of_birth'][characterMatchId]
         }
-
     else:
         availableFeatures = set(availableFeatures) - set(questionWithComplete)
 
@@ -46,8 +46,13 @@ def getQuestions():
     question = questions[feature]
 
     if feature in questionWithComplete:
-        question += characterMatch[feature]
+        question += characterMatch[feature] + '?'
         param = 'is_' + characterMatch[feature]
+
+    if characterMatch:
+        del characterMatch['eye_color']
+        del characterMatch['publisher']
+        del characterMatch['place_of_birth']
 
     return jsonify(
       feature = feature,

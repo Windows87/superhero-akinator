@@ -4,14 +4,14 @@ import getQuestion from '../../utils/getQuestion';
 
 import './styles.css';
 
-const numberOfQuestions = 10;
+const numberOfQuestions = 12;
 
 const SearchContainer = ({ question, answersButtons, onButtonClick }) => (
   <div className="searchContainer">
     <img src="/brain.png" alt="" />
     <h2>{ question }</h2>
     <div>
-      { answersButtons.map(answer => <button onClick={() => onButtonClick(answer.value)}>{ answer.title }</button>) }
+      { answersButtons.map(answer => <button key={Math.random()} onClick={() => onButtonClick(answer.value)}>{ answer.title }</button>) }
     </div>
   </div>
 );
@@ -39,22 +39,23 @@ class App extends Component {
     this.setQuestion();
   }
 
-  setQuestion = async () => {
+  setQuestion = async (answer) => {
     this.setState({ loading: true });
 
     try {
       const { alreadyFeatures, params } = this.state;
-      const { answers, characterMatch, feature, param, question } = await getQuestion(alreadyFeatures, params, this.state.answers);
+      const { answers, characterMatch, feature, param, question } = await getQuestion(alreadyFeatures, params, [...this.state.answers, answer]);
       this.setState({ params: [...this.state.params, param], alreadyFeatures: [...this.state.alreadyFeatures, feature], answersButtons: answers, characterMatch, question, loading: false });
+      if(answer) this.setState({ answers: [...this.state.answers, answer] });
     } catch(error) {
       console.log(error);
+      this.setState({ loading: false });
       alert('Error on get Question');
     }
   }
 
   onButtonClick = async answer => {
-    await this.setState({ answers: [...this.state.answers, answer] });
-    await this.setQuestion();
+    await this.setQuestion(answer);
 
     const finished = this.state.answers.length === numberOfQuestions;
 
