@@ -2,7 +2,7 @@
 
 # I WILL DISCOVER YOUR SUPERHERO!
 
-Website developed with Python, Flask, SKLearn and React.
+Website developed with Python, Flask, SKLearn and React. This example with superheroes is very inaccurate because of the features that do not differentiate one superhero from another, but the code serves as the basis for other types of information.
  
 ## Screenshots
 <div>
