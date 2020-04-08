@@ -4,7 +4,7 @@ import getQuestion from '../../utils/getQuestion';
 
 import './styles.css';
 
-const numberOfQuestions = 12;
+const numberOfQuestions = 15;
 
 const SearchContainer = ({ question, answersButtons, onButtonClick }) => (
   <div className="searchContainer">
@@ -45,7 +45,7 @@ class App extends Component {
     try {
       const { alreadyFeatures, params } = this.state;
       const { answers, characterMatch, feature, param, question } = await getQuestion(alreadyFeatures, params, this.state.answers);
-      this.setState({ params: [...this.state.params, param], alreadyFeatures: [...this.state.alreadyFeatures, feature], answersButtons: answers, characterMatch, question, loading: false });
+      this.setState({ params: [...this.state.params, param], alreadyFeatures: [...this.state.alreadyFeatures, feature], answersButtons: answers, characterMatch, question, loading: false, finished: this.state.finished || !question });
     } catch(error) {
       console.log(error);
       this.setState({ loading: false });
