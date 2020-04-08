@@ -39,3 +39,5 @@ answers = {
 }
 
 questionWithComplete = ['eye_color', 'publisher', 'place_of_birth']
+
+absoluteFeatures = ['publisher', 'gender', 'eye_color', 'place_of_birth']

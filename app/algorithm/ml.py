@@ -4,7 +4,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import LinearSVC
 from sklearn.model_selection import train_test_split
 
-from app.info import questionWithComplete
+from app.info import questionWithComplete, absoluteFeatures
 
 def convertStringTest(params, values):
     newParams = params[:]
@@ -42,11 +42,29 @@ def ml(params, newParams, test_x):
 
     train_x = data[newParams]
     data_y = data[['Unnamed: 0']]
+    dropList = []
+
+    for i in range(len(absoluteFeatures)):
+        absoluteFeature = absoluteFeatures[i]
+
+        if absoluteFeature in params:
+            print(newParams)
+            
+            for i2 in range(len(train_x)):
+                index = int(params.index(absoluteFeature))
+
+                if(train_x[newParams[index]][i2] != test_x[index]):
+                    dropList.append(data_y['Unnamed: 0'][i2])
+
+    print(dropList)
+
+    train_x = train_x.drop(dropList)
+    data_y = data_y.drop(dropList)
 
     test_x = [test_x]
 
     print(train_x)
-    #print(test_x)
+    print(test_x)
 
     model = LinearSVC()
     model.fit(train_x, data_y.values.ravel())

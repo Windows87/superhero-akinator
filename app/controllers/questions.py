@@ -1,11 +1,13 @@
 import random
 
 from flask import jsonify, request
+from flask_cors import cross_origin
 from app import app
 from app.algorithm.ml import ml
 from app.info import features, questions, answers, questionWithComplete
 
 @app.route('/api/questions/', methods = ['POST'])
+@cross_origin()
 def getQuestions():
     availableFeatures = features[:]
     characterMatch = None
@@ -28,10 +30,17 @@ def getQuestions():
           "publisher": characterMatch['publisher'][characterMatchId],
           "place_of_birth": characterMatch['place_of_birth'][characterMatchId]
         }
+
     else:
         availableFeatures = set(availableFeatures) - set(questionWithComplete)
 
     availableFeatures = list(availableFeatures)
+
+    if(not len(availableFeatures)):
+        return jsonify(
+            characterMatch = characterMatch
+        )
+
     feature = random.choice(availableFeatures)
     param = feature
     question = questions[feature]
